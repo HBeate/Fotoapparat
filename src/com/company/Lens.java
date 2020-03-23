@@ -17,6 +17,7 @@ public class Lens {
     public String getBrand() {
         return brand;
     }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
@@ -27,6 +28,10 @@ public class Lens {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public String getFocalLengthFromTo() {
+        return getFocalLengthMin() + " bis " + getFocalLengthMax();
     }
 
     public int getFocalLengthMin() {

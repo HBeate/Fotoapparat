@@ -1,19 +1,8 @@
 package com.company;
 
-public class Camera {
-    //    Objekte // Aufgabe
-//    Erstellt euer eigenes FotoApparat Objekt, implementiert getter und setter für einzelne Werte.
-//            z.B.
-//   ● genaue Bezeichnung (set und get)
-//   ● Megapixel (set und get)
-//   ● Brennweite (set und get)
-//   ● Herkunftsland (set und get)
-//   ● Funktionen (mehrere, z.B. Selbstauslöser, Film, …)  (set und get)
-//   ● Besitzer (set und get)
-//   ● Produktblatt (get) ⇒ konkateniert einzelne Werte zu einem schönen Produktblatt und gibt den formatierten String zurück
-//   ● ...
-//    Googelt nach 2-3 Kameras und setzt die technischen Werte analog der gegoogelten Kameras. Am Ende benötigen wir ein Produktblatt der einzelnen Geräte (Konsolenausgabe).
+import java.util.Scanner;
 
+public class Camera {
 
     private String brand;
     private String model;
@@ -22,37 +11,43 @@ public class Camera {
     private String countryOfOrigin;
     private String owner;
     private MemoryCard memoryCard;
-    private int pictureSize;
+    private int pictureSizeInMB;
     private Lens lens;
 
-    public Camera(String brand, String model, double megaPixel, double displaySize, int pictureSize, String countryOfOrigin) {
+    public Camera(String brand, String model, double megaPixel, double displaySize, int pictureSizeInMB, String countryOfOrigin) {
         this.brand = brand;
         this.model = model;
         this.megaPixel = megaPixel;
         this.displaySize = displaySize;
         this.countryOfOrigin = countryOfOrigin;
-        this.pictureSize = 5;
+        this.pictureSizeInMB = 5;
         this.owner = " ";
     }
-
+//TODO see if they want to delete pictures if there isn't enough space on the card
     public void takePicture() {
-        if (this.memoryCard == null) {                  // Prüfung auf Null
+        // Prüfung auf Null
+        if (this.memoryCard == null) {
             System.out.println("no card");
             return;
         }
-
-        int restStorage = this.memoryCard.getRestStorage();
-        if (restStorage >= pictureSize) {
-            memoryCard.useMemory(pictureSize);
-            restStorage = memoryCard.getRestStorage();
-            int numberOfPicturesToTake = restStorage + 1000 / pictureSize;
+        if (this.memoryCard.getRestStorageInMB() >= pictureSizeInMB) {
+            memoryCard.useMemory(pictureSizeInMB);
+            double numberOfPicturesToTake = this.memoryCard.getRestStorageInMB() / pictureSizeInMB;
             System.out.println("You can take " + numberOfPicturesToTake + " more pictures");
             System.out.println("Klick ");
+            System.out.println("Restlicher Speicherplatz ist: " + this.memoryCard.getRestStorageInMB());
         } else {
             System.out.println("There is not enough space on this card.");
-            System.out.println("Would you like to delete ");
-        }
+            System.out.println("Would you like to delete pictures? (yes/no");
+            Scanner inputScanner = new Scanner(System.in);
+            String userInput = inputScanner.next();
+            userInput = userInput.toLowerCase();
+           if (userInput == "yes"){
+               System.out.println("How many pictures would you like to delete?");
+               String userInputNumber = inputScanner.next();
+           }
 
+        }
     }
 
     public double getMegaPixel() {
@@ -62,7 +57,6 @@ public class Camera {
     public String getBrand() {
         return brand;
     }
-
 
     public String getModel() {
         return model;
@@ -110,7 +104,8 @@ public class Camera {
 
     public void setMemoryCard(MemoryCard memoryCard) {
         this.memoryCard = memoryCard;
-        System.out.println("You added a memory card." + memoryCard.getBrand() + " " + memoryCard.getModel());
+        System.out.println("You added a memory card." + memoryCard.getBrand() + " " + memoryCard.getModel() + " / "
+                + memoryCard.getRestStorageInMB() + "MB");
     }
 
     public void setLens(Lens lens) {
@@ -121,7 +116,9 @@ public class Camera {
 
     public void getSpecification() {
         System.out.println("\nSPECIFICATIONS: \nBrand: " + brand + "\nModel:" + model + "\nMegapixel: " + megaPixel
-                + "\nMade in: " + countryOfOrigin + "\nOwner: " + owner + "\nMemory Card: " +  memoryCard + "\nLens: " + lens);
+                + "\nMade in: " + countryOfOrigin + "\nOwner: " + owner + "\nMemory Card: " + memoryCard
+                + "\nStorage left on card: " + memoryCard.getRestStorageInMB() + "\nLens: " + lens + " "
+                + lens.getFocalLengthFromTo() + "MB");
     }
 }
 
