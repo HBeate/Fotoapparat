@@ -19,29 +19,41 @@ public class Camera {
     private String model;
     private double megaPixel;
     private double displaySize;
-
     private String countryOfOrigin;
     private String owner;
-    private double memoryCard;
-    private String lens;
+    private MemoryCard memoryCard;
+    private int pictureSize;
+    private Lens lens;
 
-    public Camera(String brand, String model, double megaPixel, double displaySize, String countryOfOrigin, String owner) {
+    public Camera(String brand, String model, double megaPixel, double displaySize, int pictureSize, String countryOfOrigin) {
         this.brand = brand;
         this.model = model;
         this.megaPixel = megaPixel;
         this.displaySize = displaySize;
         this.countryOfOrigin = countryOfOrigin;
-        this.owner = owner;
-
+        this.pictureSize = 5;
+        this.owner = " ";
     }
-
-
 
     public void takePicture() {
-        System.out.println("Klick ");
+        if (this.memoryCard == null) {                  // Prüfung auf Null
+            System.out.println("no card");
+            return;
+        }
+
+        int restStorage = this.memoryCard.getRestStorage();
+        if (restStorage >= pictureSize) {
+            memoryCard.useMemory(pictureSize);
+            restStorage = memoryCard.getRestStorage();
+            int numberOfPicturesToTake = restStorage + 1000 / pictureSize;
+            System.out.println("You can take " + numberOfPicturesToTake + " more pictures");
+            System.out.println("Klick ");
+        } else {
+            System.out.println("There is not enough space on this card.");
+            System.out.println("Would you like to delete ");
+        }
+
     }
-
-
 
     public double getMegaPixel() {
         return megaPixel;
@@ -55,7 +67,6 @@ public class Camera {
     public String getModel() {
         return model;
     }
-
 
     public void setMegaPixel(int megaPixel) {
         if (megaPixel < 1) {
@@ -88,6 +99,29 @@ public class Camera {
     public void setOwner(String owner) {
         this.owner = owner;
     }
-}
 
+    public MemoryCard getMemoryCard() {
+        return memoryCard;
+    }
+
+    public Lens getLens() {
+        return lens;
+    }
+
+    public void setMemoryCard(MemoryCard memoryCard) {
+        this.memoryCard = memoryCard;
+        System.out.println("You added a memory card." + memoryCard.getBrand() + " " + memoryCard.getModel());
+    }
+
+    public void setLens(Lens lens) {
+        this.lens = lens;
+        System.out.println("You added a lens:" + lens.getBrand() + " " + lens.getModel() + " with minimal folal length "
+                + lens.getFocalLengthMin() + " and maximal focal length " + lens.getFocalLengthMax());
+    }
+
+    public void getSpecification() {
+        System.out.println("\nSPECIFICATIONS: \nBrand: " + brand + "\nModel:" + model + "\nMegapixel: " + megaPixel
+                + "\nMade in: " + countryOfOrigin + "\nOwner: " + owner + "\nMemory Card: " +  memoryCard + "\nLens: " + lens);
+    }
+}
 
