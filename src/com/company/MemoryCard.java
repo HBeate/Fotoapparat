@@ -3,39 +3,38 @@ package com.company;
 public class MemoryCard {
     private String brand;
     private String model;
-    private int totalStorageInMB;
-    private int actualStorageInMB;
+    private int totalStorageInMb;
+    private int actualStorageInMb;
 
-    public MemoryCard(String brand, String model, int totalStorageInMB) {
+    public MemoryCard(String brand, String model, int totalStorageInMb) {
         this.brand = brand;
         this.model = model;
-        this.totalStorageInMB = totalStorageInMB;
+        this.totalStorageInMb = totalStorageInMb;
     }
 
-
-    public void useMemory(int usedStorageInMB){
-        this.actualStorageInMB += usedStorageInMB;
+    public void useMemory(int usedStorageInMb){
+        this.actualStorageInMb += usedStorageInMb;
     }
+
+    public void freeMemory(int freedStorageInMb) {
+        this.actualStorageInMb -= freedStorageInMb;
+    }
+
     public int getRestStorageInMB(){
-        return totalStorageInMB - this.actualStorageInMB;
+        return totalStorageInMb - this.actualStorageInMb;
     }
-
-//    public int getRestStorageInGB(){
-//        return getRestStorageInMB() / 1024;
-//    }
 
     public String getBrand() {
         return brand;
     }
+
     public String getModel() {
         return model;
     }
-    public int getStorageSize() {
-        return totalStorageInMB;
-    }
+
     @Override
     public String toString() {
-        return  brand + " " + model + " / " + totalStorageInMB + "MB";
+        return  brand + " " + model + " / " + totalStorageInMb + "MB";
     }
 
 }

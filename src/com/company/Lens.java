@@ -18,16 +18,8 @@ public class Lens {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getFocalLengthFromTo() {
@@ -40,17 +32,6 @@ public class Lens {
 
     public int getFocalLengthMax() {
         return focalLengthMax;
-    }
-
-    public static final int MIN_FOCALLENGTH = 10;
-
-    public void setFocalLength(int focalLengthMin, int focalLengthMax) {
-        if (focalLengthMin > this.focalLengthMax) {
-            System.out.println("the minimal focal length can't be larger than the maximal focal length");
-        } else {
-            this.focalLengthMin = focalLengthMin;
-            this.focalLengthMax = focalLengthMax;
-        }
     }
 
     @Override
